@@ -1,0 +1,44 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Farming products sold on the platform",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "unit": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "image": { "type": "string" },
+        "farmer": { "type": "string" },
+        "location": { "type": "string" },
+        "organic": { "type": "boolean" },
+        "farmToTable": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "unit", "image"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "isAdmin": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "Public catalog of products"
+    },
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Private user profiles"
+    }
+  }
+}

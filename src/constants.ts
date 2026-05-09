@@ -1,0 +1,65 @@
+import { Product } from './types';
+
+export const PRODUCTS: Product[] = [
+  {
+    id: '1',
+    name: 'Морква домашня',
+    price: 45,
+    unit: 'кг',
+    description: 'Вирощено без пестицидів на фермі "Полісся". Солодка та хрустка.',
+    category: 'Овочі',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBMHGjl6WC8yrxulTfGVsnpPjWne4njCkpxTueAkOILl2i7Fn2x1pPkHSSq902eWG0Zk9-LVwgnd1BT6Eg3gFvLXOPKjo7e1zwOlJJucSyGtlHaURyTzIUp03cQCde1opLuEkOTo_04nQcww2KRIgSH7Vd5ZUqK8mJqvpIHgRNksg8TkQRWhBpferie08H9QDGZwyMZ1lcQvnAErDTrFgawcD3lNwKcsfoQsDk6Qn8i09TgnS9O66PPC4thSY8CPCfnCOn2rIOP1eQ',
+    farmer: 'Ферма Полісся',
+    location: 'Житомирська область',
+    organic: true,
+    farmToTable: false,
+  },
+  {
+    id: '2',
+    name: 'Молоко домашнє',
+    price: 45,
+    unit: '1л',
+    description: 'Натуральне коров\'яче молоко від фермерських корів.',
+    category: 'Молочні',
+    image: '/milk_bottle.jpg',
+    farmer: 'Ферма "Молочний розмай"',
+    location: 'Вінницька область',
+    organic: true,
+    farmToTable: true,
+  },
+  {
+    id: '3',
+    name: 'Мед липовий',
+    price: 220,
+    unit: '0.5 л',
+    description: 'Ароматний мед з приватної пасіки на Вінниччині. Збір 2024 року.',
+    category: 'Мед',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDJLYvBy1sQzHa_DfiaNUQw7o07wpFqhQWbdXIRyiIwK2ywGtTJXpW1EsvMaDQCcKF-lWCOXjWoCRQkoiaOhgffCfS9NndRaPexKTn3aUHNTkRpkPO2W9836sQDQ889eJlw9HtuHIZbfJCwmuIsOxwgpv-NefWNBXxWnZbKp1EkpsML_Zv1i6SjUpIuwowKynEUQAaQjfBbFEneiaj4_zsxHmDbG8Q09u32CZ9rs4uu58mPMJxBwb6SV_x4NTXybOO4tlQ9BZ_EouY',
+    farmer: 'Вінниччина',
+    location: 'Вінницька область',
+    organic: false,
+    farmToTable: false,
+  },
+  {
+    id: '4',
+    name: 'Хліб крафтовий',
+    price: 48,
+    unit: 'шт',
+    description: 'Пшеничний хліб на натуральній заквасці. Випікається щоранку.',
+    category: 'Випічка',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDsxJicC0tl_qj5juzCr-lQbfOuwV41aiCwrXAIwTscmL_KF0lARl9_t4go5qwkYOJZIyPC40BLKmJng_ngMWLeVPVBIWB1m0Z4HLPj13Cu9rh41Gl5OhYipEOfCL89T8LaeiL4U9Z1v1A0GXG2MWuH1kmpflTV5q0DiDH2e7lYgC-zssoNSsr2UPr6SSeA4a2dbiS-FFNuXxmoGJoZJdB9bNdsap4QP2jyW-QKfKLsEMiEUgPZq0dkvnsydfvLGCygKp26Hs_ytbw',
+    farmer: 'Натуральна закваска',
+    location: 'Львівська область',
+    organic: false,
+    farmToTable: false,
+  }
+];
+
+export const CATEGORIES = [
+  { name: 'Овочі', icon: 'Sprout' },
+  { name: 'Фрукти', icon: 'Apple' },
+  { name: 'Молочні', icon: 'Milk' },
+  { name: 'Випічка', icon: 'Croissant' },
+  { name: 'М\'ясо', icon: 'Beef' },
+  { name: 'Мед', icon: 'Honey' },
+];
