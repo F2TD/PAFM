@@ -14,10 +14,13 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import TopAppBar from './components/TopAppBar';
 import Footer from './components/Footer';
+import AuthModal from './components/AuthModal';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  isAuthModalOpen: boolean;
+  setIsAuthModalOpen: (open: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -62,6 +65,7 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -97,7 +101,6 @@ export default function App() {
 
   const clearCart = () => setCart([]);
 
-  // Handle profile-specific body classes or styles
   useEffect(() => {
     document.documentElement.className = profile === 'vision' ? 'dark' : 'light';
     if (profile === 'vision') {
@@ -119,10 +122,11 @@ export default function App() {
 
   return (
     <Router>
-      <AuthContext.Provider value={{ user, loading }}>
+      <AuthContext.Provider value={{ user, loading, isAuthModalOpen, setIsAuthModalOpen }}>
         <AccessibilityContext.Provider value={{ profile, setProfile }}>
           <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
             <div className={`min-h-screen flex flex-col ${profile === 'vision' ? 'bg-black text-yellow-400' : 'bg-background text-on-background'}`}>
+              <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
               <TopAppBar />
               <main className="flex-grow" aria-live="polite">
                 <Routes>

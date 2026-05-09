@@ -1,13 +1,15 @@
+import { useState } from 'react';
 import { useAccessibility, useCart, useAuth } from '../App';
 import { AppWindow, Eye, Hand, Brain, ShoppingCart, User, LogIn, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AccessibilityProfile } from '../types';
-import { signInWithGoogle, logout } from '../lib/firebase';
+import { logout } from '../lib/firebase';
+import AuthModal from './AuthModal';
 
 export default function TopAppBar() {
   const { profile, setProfile } = useAccessibility();
   const { cart } = useCart();
-  const { user, loading } = useAuth();
+  const { user, loading, isAuthModalOpen, setIsAuthModalOpen } = useAuth();
 
   const profiles: { id: AccessibilityProfile; icon: any; title: string }[] = [
     { id: 'standard', icon: AppWindow, title: 'Стандартний' },
@@ -29,7 +31,7 @@ export default function TopAppBar() {
       );
     }
     return (
-      <button onClick={signInWithGoogle} className={`${className} flex items-center gap-2`} title="Увійти">
+      <button onClick={() => setIsAuthModalOpen(true)} className={`${className} flex items-center gap-2`} title="Увійти">
         <LogIn size={profile === 'vision' ? 36 : 24} />
       </button>
     );
@@ -38,6 +40,7 @@ export default function TopAppBar() {
   if (profile === 'vision') {
     return (
       <header className="bg-black border-b-[6px] border-secondary-fixed-dim sticky top-0 z-50">
+        <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
         <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-6 max-w-7xl mx-auto">
           <div className="flex items-center gap-10">
             <Link to="/" className="font-black text-secondary-fixed-dim text-6xl md:text-8xl">PAFM</Link>
@@ -84,6 +87,7 @@ export default function TopAppBar() {
   if (profile === 'mobility') {
     return (
       <header className="bg-surface border-b border-outline-variant fixed top-0 left-0 right-0 z-50">
+        <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
         <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-7xl mx-auto h-[120px]">
           <Link to="/" className="text-6xl font-black text-primary">PAFM</Link>
           <nav className="hidden md:flex items-center gap-10">
@@ -128,6 +132,7 @@ export default function TopAppBar() {
   if (profile === 'cognitive') {
     return (
       <header className="bg-surface border-b border-outline-variant sticky top-0 z-50">
+        <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
         <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-5 max-w-7xl mx-auto">
           <Link to="/" className="text-3xl font-black text-primary">PAFM</Link>
           <div className="flex items-center gap-4">
@@ -165,6 +170,7 @@ export default function TopAppBar() {
   // Standard Profile
   return (
     <header className="bg-surface border-b border-outline-variant sticky top-0 z-50">
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
       <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-8 max-w-7xl mx-auto">
         <div className="flex items-center gap-20">
           <Link to="/" className="text-5xl font-black text-primary tracking-tighter">PAFM</Link>
