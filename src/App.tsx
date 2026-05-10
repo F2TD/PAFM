@@ -6,8 +6,9 @@
 import { useState, createContext, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AccessibilityProfile, CartItem, Product } from './types';
-import { auth } from './lib/firebase';
+import { auth, db } from './lib/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -66,11 +67,26 @@ export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [profileLoaded, setProfileLoaded] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (u) => {
+      setUser(u);
       setLoading(false);
+      if (u) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', u.uid));
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            if (data.accessibilityProfile) {
+              setProfile(data.accessibilityProfile as AccessibilityProfile);
+            }
+          }
+        } catch (e) {
+          console.error("Failed to fetch profile", e);
+        }
+      }
+      setProfileLoaded(true);
     });
     return unsubscribe;
   }, []);
@@ -118,7 +134,11 @@ export default function App() {
     } else {
       document.body.classList.remove('mobility-profile');
     }
-  }, [profile]);
+
+    if (user && profileLoaded) {
+      setDoc(doc(db, 'users', user.uid), { accessibilityProfile: profile }, { merge: true });
+    }
+  }, [profile, user, profileLoaded]);
 
   return (
     <Router>

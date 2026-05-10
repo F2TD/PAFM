@@ -27,6 +27,7 @@
         "displayName": { "type": "string" },
         "email": { "type": "string" },
         "isAdmin": { "type": "boolean" },
+        "accessibilityProfile": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
       }
     }
