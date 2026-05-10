@@ -9,6 +9,7 @@ interface AuthModalProps {
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState('');
 
@@ -21,7 +22,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       if (isLogin) {
         await signInWithEmail(email, password);
       } else {
-        await signUpWithEmail(email, password);
+        await signUpWithEmail(email, password, displayName);
       }
       onClose();
     } catch (err: any) {
@@ -35,6 +36,16 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         <h2 className="text-xl font-bold mb-4">{isLogin ? 'Увійти' : 'Зареєструватися'}</h2>
         {error && <p className="text-error mb-2 text-sm">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
+          {!isLogin && (
+            <input
+              type="text"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="Ім'я"
+              className="w-full p-2 border rounded"
+              required
+            />
+          )}
           <input
             type="email"
             value={email}

@@ -21,7 +21,7 @@ export const PRODUCTS: Product[] = [
     unit: '1л',
     description: 'Натуральне коров\'яче молоко від фермерських корів.',
     category: 'Молочні',
-    image: 'pafm/milk_bottle.jpg',
+    image: '/milk_bottle.jpg',
     farmer: 'Ферма "Молочний розмай"',
     location: 'Вінницька область',
     organic: true,

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { getFirestore, doc, getDocFromServer } from 'firebase/firestore';
+import { getFirestore, doc, getDocFromServer, setDoc, serverTimestamp } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
 const app = initializeApp(firebaseConfig);
@@ -20,7 +20,20 @@ export const signInWithGoogle = async () => {
 };
 export const logout = () => signOut(auth);
 
-export const signUpWithEmail = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
+export const signUpWithEmail = async (email: string, password: string, displayName: string) => {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  try {
+    await setDoc(doc(db, 'users', userCredential.user.uid), {
+      displayName,
+      email,
+      createdAt: serverTimestamp()
+    });
+  } catch (error) {
+    console.error("Error creating user document", error);
+    throw error;
+  }
+  return userCredential;
+};
 export const signInWithEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 
 // Connection test as per instructions
